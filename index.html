@@ -38,6 +38,10 @@
                 width: 100%;
             }
 
+            .accordionHeader:focus h2{
+                color: hsl(300, 50%, 60%);
+            }
+
             .accordionIcon {
                 height: auto;
                 width: 32px;
@@ -152,22 +156,32 @@
                 const accordionHeaders = document.querySelectorAll('.cardBoxAccordion');
 
                 accordionHeaders.forEach(header => {
-                    header.addEventListener('click', function() {
-                        const content = this.querySelector('.accordionContent');
-                        const icon = this.querySelector('.accordionIcon');
-                        const text = this.querySelector('.accordionText');
-
-                        if (content.classList.contains('open')) {
-                            content.classList.remove('open');
-                            text.classList.remove('open');
-                            icon.src = "assets/images/icon-plus.svg";
-                        } else {
-                            content.classList.add('open');
-                            text.classList.add('open');
-                            icon.src = "assets/images/icon-minus.svg";
+                    header.addEventListener('click', toggleAccordion);
+                    header.addEventListener('keydown', function(event) {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            toggleAccordion.call(this);
+                            event.preventDefault();
                         }
                     });
                 });
+
+                function toggleAccordion() {
+                    const content = this.querySelector('.accordionContent');
+                    const icon = this.querySelector('.accordionIcon');
+                    const text = this.querySelector('.accordionText');
+
+                    if (content.classList.contains('open')) {
+                        content.classList.remove('open');
+                        text.classList.remove('open');
+                        icon.src = "assets/images/icon-plus.svg";
+                        this.setAttribute('aria-expanded', 'false');
+                    } else {
+                        content.classList.add('open');
+                        text.classList.add('open');
+                        icon.src = "assets/images/icon-minus.svg";
+                        this.setAttribute('aria-expanded', 'true');
+                    }
+                }
             });
         </script>
     </head>
@@ -180,7 +194,7 @@
                 </header>
                 <section>
                     <div class="cardBoxAccordion">
-                        <div class="accordionHeader">
+                        <div class="accordionHeader" tabindex="1">
                             <h2>What is Frontend Mentor, and how will it help me?</h2>
                             <div class="accordionIconContainer">
                                 <img src="assets/images/icon-plus.svg" class="accordionIcon" alt="plus icon">
@@ -194,7 +208,7 @@
                     </div>
                     <hr>
                     <div class="cardBoxAccordion">
-                        <div class="accordionHeader">
+                        <div class="accordionHeader" tabindex="2">
                             <h2>Is Frontend Mentor free?</h2>
                             <div class="accordionIconContainer">
                                 <img src="assets/images/icon-plus.svg" class="accordionIcon" alt="plus icon">
@@ -207,7 +221,7 @@
                     </div>
                     <hr>
                     <div class="cardBoxAccordion">
-                        <div class="accordionHeader">
+                        <div class="accordionHeader" tabindex="3">
                             <h2>Can I use Frontend Mentor projects in my portfolio?</h2>
                             <div class="accordionIconContainer">
                                 <img src="assets/images/icon-plus.svg" class="accordionIcon" alt="plus icon">
@@ -220,7 +234,7 @@
                     </div>
                     <hr>
                     <div class="cardBoxAccordion">
-                        <div class="accordionHeader">
+                        <div class="accordionHeader" tabindex="4">
                             <h2>How can I get help if I'm stuck on a challenge?</h2>
                             <div class="accordionIconContainer">
                                 <img src="assets/images/icon-plus.svg" class="accordionIcon" alt="plus icon">
